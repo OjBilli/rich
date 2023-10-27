@@ -9,9 +9,17 @@ use App\Models\Card;
 class DeviceController extends Controller
 {
     //
-    function list()
+    function list($id=null)
     {
-        $bank = Bank::all();
+        $bank = $id?Bank::find($id):Bank::all();
+        $card = Card::all();
+
+        return $bank. $card;
+    }
+
+    function name($name=null)
+    {
+        $bank = $name?Bank::where('name',$name)->first():Bank::all();
         $card = Card::all();
 
         return $bank. $card;
