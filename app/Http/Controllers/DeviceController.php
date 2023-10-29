@@ -24,4 +24,38 @@ class DeviceController extends Controller
 
         return $bank. $card;
     }
+    function add(Request $req)
+    {
+        $bank = new Bank;
+        $bank ->name =$req->name;
+        $bank ->code =$req->code;
+        $result = $bank ->save();
+        if($result)
+        {
+            return ["RESULT" => "Data has been saved"];
+        }
+        else
+        {
+            return ["RESULT" => "Operation failed"];
+        }
+
+
+    }
+
+    function update(Request $req)
+    {
+        $bank = Bank::find($req->id);
+        $bank ->name =$req->name;
+        $bank ->code =$req->code;
+        $result = $bank ->save();
+        if($result)
+        {
+            return ["RESULT" => "Data has been Updated"];
+        }
+        else
+        {
+            return ["RESULT" => "Update Operation failed"];
+        }
+
+    }
 }
