@@ -58,4 +58,32 @@ class DeviceController extends Controller
         }
 
     }
+    function search($name)
+    {
+        $result = Bank::where("name","like", "%".$name. "%")->get();
+        if(count($result)){
+            return $result;
+        } else {
+            return array('Result'=> 'No records found');
+        }
+
+    }
+    function delete($id)
+    {
+        $bank = Bank::find($id);
+        $result = $bank -> delete();
+        if ($result){
+            return ["return" => "Data deleted"];
+        }
+        else{
+            return ["return" => "Delete operation failed"];
+        }
+
+    }
+    function testData(Request $req){
+
+
+        return["result"=>"test completed"];
+
+    }
 }
