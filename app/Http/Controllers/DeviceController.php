@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+
 use App\Models\Bank;
 use App\Models\Card;
+use Validator;
 
 class DeviceController extends Controller
 {
@@ -82,8 +84,31 @@ class DeviceController extends Controller
     }
     function testData(Request $req){
 
+        $rules = array(
 
-        return["result"=>"test completed"];
+            "name" => "required",
+            "code" => "required",
+        );
+        $validator = Validator::make($req->all(),$rules);
+        if($validator->fails())
+        {
+            return response()->json($validator->errors(), 401);
+        }
+        else{
+            $bank = new Bank;
+            $bank ->name =$req->name;
+            $bank ->code =$req->code;
+            $result = $bank ->save();
+            if($result)
+            {
+                return ["RESULT" => "Data has been saved"];
+            }
+            else
+            {
+                return ["RESULT" => "Operation failed"];
+            }
+        }
+
 
     }
 }
